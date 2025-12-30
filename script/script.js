@@ -1,45 +1,43 @@
-//declare symbols
-//connect symbols to buttons
-//add listeners to each button
-
-const symbols = [
+const symbols=[
     "AC","+/-","%","/",
     "9","8","7","*",
     "6","5","4","-",
     "3","2","1","+",
     "0",".","="
 ]
-const topSymbols = [
+const topSymbols=[
     "AC","+/-","%"
 ]
-const rightSymbols = [
+const rightSymbols=[
     "+","-","*","/","="
 ]
+a = 0; b = null; operator = null;
+function clearAll(){
+    a = 0;
+    b = null;
+    operator=null;
+}
 
-let a = 0;
-let b = null;
-let operator = null;
+display = document.getElementById("display")
 
-const display = document.getElementById("display");
-
-for (let i = 0; i < symbols.length; i++){
+for (let i = 0; i<symbols.length; i++){
     let value = symbols[i];
     let button = document.createElement("button");
-    button.innerText = value;
-    
+    button.innerText=value;
     if (value == "0"){
-        button.style.width = "200px";
+        button.style.width = "160px";
         button.style.gridColumn = "span 2";
     }
-
-    if (rightSymbols.includes(value)){
-        button.style.backgroundColor = "orange"
+    if(rightSymbols.includes(value)){
+        button.style.backgroundColor="orange";
+        button.style.color="black";
     }
-    if (topSymbols.includes(value)){
-        button.style.backgroundColor = "#D2D250"
+    if(topSymbols.includes(value)){
+        button.style.backgroundColor="#D2D200";
+        button.style.color="black";
     }
 
-    button.addEventListener("click",function(){
+    button.addEventListener("click", function(){
         if (rightSymbols.includes(value)){
             if (value == "="){
                 if (a != null){
@@ -69,29 +67,27 @@ for (let i = 0; i < symbols.length; i++){
         }else if(topSymbols.includes(value)){
             switch(value){
                 case "AC":
-                    a = 0;b = 0;operator = null;
+                    clearAll();
                     display.value = "";
                     break;
                 case "+/-":
-                    display.value = Number(display.value) * -1;
+                    display.value = Number(display.value) * (-1);
                     break;
                 case "%":
-                    display.value = Number(display.value) / 100;
-                    break;
+                    display.value = Number(display.value)/100;
             }
         }else{
-            if(value == "."){
-                if (display.value != "" && !display.value.includes(".")){
+            if (value == "."){
+                if (!display.value.includes(".") && display.value != ""){
                     display.value += value;
                 }
             }else if (display.value == "0"){
-                display.value = value;
+                    display.value = value;
             }else{
-                display.value += value;
+                    display.value += value;
             }
         }
     })
 
-    document.getElementById("buttons").appendChild(button)
-
+    document.getElementById("buttons").appendChild(button);
 }
